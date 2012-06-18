@@ -6,7 +6,7 @@
   
   function initialize() {
     registerEventListeners();
-    isLoggedIn();
+    //isLoggedIn();
     
     // setTimeout( function() {
     //   bc.device.openURI( "http://www.facebook.com/dialog/oauth/?client_id=429947087044863&redirect_uri=http%3A%2F%2Fsmooth-stone-1901.herokuapp.com%2F", undefined, undefined, { modalWebBrowser: true } );
@@ -15,8 +15,11 @@
   }
   
   function handlePostMessage( message ) {
-    alert( message );
-    alert( message.data );
+    message = JSON.stringify( message.originalEvent.data );
+    if( message.status !== "connected" ) {
+      //Show a login button.
+      bc.device.openURI( "http://www.facebook.com/dialog/oauth/?client_id=429947087044863&redirect_uri=http%3A%2F%2Fsmooth-stone-1901.herokuapp.com%2F", undefined, undefined, { modalWebBrowser: true } );
+    }
   }
 
   /**
