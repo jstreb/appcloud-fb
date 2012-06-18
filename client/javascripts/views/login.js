@@ -1,24 +1,26 @@
 ( function( $ ) {
-  
+  var _FBComm;
+
   $( window ).bind( "message", handlePostMessage );
   
+  $( "#fb_comm" ).load( function() { 
+    _FBComm = this.contentWindow;
+  });
+
   $( bc ).bind( "init", initialize );
   
   function initialize() {
     registerEventListeners();
-    //isLoggedIn();
-    
-    // setTimeout( function() {
-    //   bc.device.openURI( "http://www.facebook.com/dialog/oauth/?client_id=429947087044863&redirect_uri=http%3A%2F%2Fsmooth-stone-1901.herokuapp.com%2F", undefined, undefined, { modalWebBrowser: true } );
-    // }, 2000 );
-    
   }
   
   function handlePostMessage( message ) {
-    message = JSON.stringify( message.originalEvent.data );
+    message = JSON.parse( message.originalEvent.data );
     if( message.status !== "connected" ) {
       //Show a login button.
-      bc.device.openURI( "http://www.facebook.com/dialog/oauth/?client_id=429947087044863&redirect_uri=http%3A%2F%2Fsmooth-stone-1901.herokuapp.com%2F", undefined, undefined, { modalWebBrowser: true } );
+      //https://www.facebook.com/dialog/oauth?
+      alert( "show login button")
+    } else {
+      alert( "connected bitches" );
     }
   }
 
@@ -27,7 +29,16 @@
    * created which is why we use the delegate syntax.
    */
   function registerEventListeners() {
+    $( ".login" ).bind( "tap", login );
+    $( ".logout" ).bind( "tap", logout );
+  }
 
+  function login() {
+    bc.device.openURI( "https://www.facebook.com/dialog/oauth?client_id=429947087044863&redirect_uri=http%3A%2F%2Fsmooth-stone-1901.herokuapp.com%2F", undefined, undefined, { modalWebBrowser: true } );
+  }
+
+  function logout() {
+    _FBComm.postMessage( "logout", "*" );
   }
 
 })( jQuery );

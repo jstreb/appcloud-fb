@@ -10,9 +10,16 @@ window.fbAsyncInit = function() {
   status();
 };
 
-$( document ).ready( function() {
+$( window ).bind( "message", handlePostMessage );
 
-});
+function handlePostMessage( message ) {
+  message = message.originalEvent.data;
+  if( message === "logout" ) {
+    FB.logout(function(response) {
+      window.parent.postMessage(JSON.stringify( { "status": null } ), "*" );
+    });
+  }
+}
 
 function status() {
   FB.getLoginStatus( function( response ) {
