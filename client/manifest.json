@@ -1,0 +1,26 @@
+{
+    "description": "Please provide a description for this template.",
+    "version": "1.0",
+    "devices": [
+        "iPhone",
+        "Android"
+    ],
+    "platformConfig": {
+        "android": {
+            "nativeNavigation": true
+        },
+        "iOS": {
+            "nativeNavigation": true
+        }
+    },
+    "name": "fb",
+    "views": [
+        {
+            "navigationTitle": "login",
+            "navigationIcon": "images/icons/login.png",
+            "uri": "./html/login.html",
+            "locales": "./txt/locales/en.txt",
+            "markup": "./txt/markup/login.txt"
+        }
+    ]
+}
