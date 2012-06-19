@@ -12,12 +12,13 @@
   
   function handlePostMessage( message ) {
     message = JSON.parse( message.originalEvent.data );
-    if( message.status !== "connected" ) {
-      //Show a login button.
-      //https://www.facebook.com/dialog/oauth?
-      alert( "show login button")
-    } else {
-      alert( "connected bitches" );
+    switch( message.api ) {
+      case "loginStatus":
+        handleStatus( message );
+      case "logout":
+        handleLogout( message );
+      case "getUserInfo":
+        handleUserInfo( message );
     }
   }
 
@@ -28,6 +29,22 @@
   function registerEventListeners() {
     $( ".login" ).bind( "tap", login );
     $( ".logout" ).bind( "tap", logout );
+  }
+
+  function handleStatus( message ) {
+    if( message.status === "connected" ) {
+      alert( "get user info" );
+      _FBComm.postMessage( "getUserInfo" );
+    }
+  }
+
+  function logout( message ) {
+    alert( "logged out.  Show login" );
+  }
+
+  function handleUserInfo( message ) {
+    console.log( message );
+    alert("got a user");
   }
 
   function login() {

@@ -23,19 +23,52 @@
       //Get the login status for this user.  (The users login status is stored in the browsers cookies.)
       function status() {
         FB.getLoginStatus( function( response ) {
-          if( window.parent ) {
-            window.parent.postMessage(JSON.stringify( response ), "*" );
-          }
+          var message = { 
+            api: "loginStatus",
+            response: response 
+          };
+          sendMessage( message );
         });
       }
       
       //Respond to requets from the parent window.
       function handlePostMessage( message ) {
         message = message.originalEvent.data;
-        if( message === "logout" ) {
-          FB.logout(function(response) {
-            window.parent.postMessage(JSON.stringify( { "status": null } ), "*" );
-          });
+        switch( message ){
+          case "logout":
+            logout();
+          case "getUserInfo"
+            getUserInfo();
+        }
+
+      }
+
+      //Logs the user out
+      function logout() {
+        FB.logout(function(response) {
+          var message = {
+            api: "logout",
+            response: response
+          }
+          sendMessage( message );
+        });
+      }
+
+      //get info about user
+      function getUserInfo() {
+        FB.api( "/me", function(response) {
+          var message = {
+            api: "getUserInfo",
+            response: response
+          }
+          sendMessage( message );
+        });
+      }
+
+      //Post the message to the window parent in the application.
+      function sendMessage( message ) {
+        if( window.parent ) {
+          window.parent.postMessage(JSON.stringify( message ), "*" );
         }
       }
       
