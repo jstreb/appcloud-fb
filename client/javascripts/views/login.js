@@ -15,10 +15,13 @@
     switch( message.api ) {
       case "loginStatus":
         handleStatus( message );
+        break;
       case "logout":
         handleLogout( message );
+        break;
       case "getUserInfo":
         handleUserInfo( message );
+        break;
     }
   }
 
@@ -27,24 +30,40 @@
    * created which is why we use the delegate syntax.
    */
   function registerEventListeners() {
-    $( ".login" ).bind( "tap", login );
-    $( ".logout" ).bind( "tap", logout );
+    $( "body" ).on( "tap", ".login", login)
+               .on( "tap", ".logout", logout );
   }
 
   function handleStatus( message ) {
-    if( message.status === "connected" ) {
-      alert( "get user info" );
-      _FBComm.postMessage( "getUserInfo" );
+    if( message.response.status === "connected" ) {
+      _FBComm.postMessage( "getUserInfo", "*" );
+    } else {
+      var html = Mark.up( bc.templates["login-tmpl"] );
+      $( ".contents" ).html( html );
     }
   }
 
-  function logout( message ) {
-    alert( "logged out.  Show login" );
+  function handleLogout( message ) {
+    var html = Mark.up( bc.templates["login-tmpl"] );
+    $( ".contents" ).html( html );
   }
 
   function handleUserInfo( message ) {
     console.log( message );
-    alert("got a user");
+    var html,
+        context;
+
+    message = message.response;
+
+    context = {
+      profile: "http://graph.facebook.com/" + message.id + "/picture",
+      first_name: message.first_name,
+      last_name: message.last_name,
+      gender: message.gender
+    };
+
+    html = Mark.up( bc.templates["user-info-tmpl"], context );
+    $( ".contents" ).html( html );
   }
 
   function login() {

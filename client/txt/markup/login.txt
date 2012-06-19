@@ -1,16 +1,20 @@
-===== first-page-tmpl
-<ul>
-  {{listitems}}
-    <li class="desc-a">
-      {{title}}
-      <div class="arrow"></div>
-    </li>
-  {{/listitems}}
-</ul>
+===== login-tmpl
+<div class="button login">Login</div>
 
-===== second-page-tmpl
+===== user-info-tmpl
 <!-- The details_msg comes from the locale.txt file.  Any strings that are hardcoded for your app should go into the locale files -->
-<h2 class="desc-c">{{details_msg}}</h2>
-<p>
-  {{text}}
-</p>
+<table>
+  <tr>
+    <td>Profile</td>
+    <td><img src="{{profile}}" /></td>
+  </tr>
+  <tr>
+    <td>Name</td>
+    <td>{{first_name}} {{last_name}}</td>
+  </tr>
+  <tr>
+    <td>Gender</td>
+    <td>{{gender}}</td>
+  </tr>
+</table>
+<div class="button logout">Logout</div>
