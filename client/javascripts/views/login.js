@@ -34,7 +34,7 @@
   }
 
   function login() {
-    bc.device.openURI( "https://www.facebook.com/dialog/oauth?client_id=429947087044863&redirect_uri=http%3A%2F%2Fsmooth-stone-1901.herokuapp.com%2F", undefined, undefined, { modalWebBrowser: true } );
+    bc.device.openURI( "https://www.facebook.com/dialog/oauth?client_id=429947087044863&redirect_uri=http%3A%2F%2Fsmooth-stone-1901.herokuapp.com%2F&display=touch", undefined, undefined, { modalWebBrowser: true } );
   }
 
   function logout() {
