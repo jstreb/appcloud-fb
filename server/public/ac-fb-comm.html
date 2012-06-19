@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <script src="http://code.jquery.com/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="http://connect.facebook.net/en_US/all.js" type="text/javascript"></script>
+    <script>
+    ( function( $, undefined ) {
+      
+      //Initialize Facebook
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '429947087044863',
+          status     : true,
+          cookie     : true,
+          xfbml      : true,
+          oauth      : true,
+        });
+        status();
+      };
+      
+      //Listen for postMessages from the App Cloud app.  (This page is embedded as an iFrame)
+      $( window ).bind( "message", handlePostMessage );
+      
+      //Get the login status for this user.  (The users login status is stored in the browsers cookies.)
+      function status() {
+        FB.getLoginStatus( function( response ) {
+          if( window.parent ) {
+            window.parent.postMessage(JSON.stringify( response ), "*" );
+          }
+        });
+      }
+      
+      //Respond to requets from the parent window.
+      function handlePostMessage( message ) {
+        message = message.originalEvent.data;
+        if( message === "logout" ) {
+          FB.logout(function(response) {
+            window.parent.postMessage(JSON.stringify( { "status": null } ), "*" );
+          });
+        }
+      }
+      
+    })( jQuery );
+    </script>
+  </head>
+  <body>
+  </body>
+</html>
