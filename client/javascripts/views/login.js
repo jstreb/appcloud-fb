@@ -2,14 +2,11 @@
   var _FBComm;
 
   $( window ).bind( "message", handlePostMessage );
-  
-  $( "#fb_comm" ).load( function() { 
-    _FBComm = this.contentWindow;
-  });
 
   $( bc ).bind( "init", initialize );
   
   function initialize() {
+    _FBComm = document.getElementById( "fb_comm" ).contentWindow;
     registerEventListeners();
   }
   
@@ -34,7 +31,7 @@
   }
 
   function login() {
-    bc.device.openURI( "https://www.facebook.com/dialog/oauth?client_id=429947087044863&redirect_uri=http%3A%2F%2Fsmooth-stone-1901.herokuapp.com%2F&display=touch", undefined, undefined, { modalWebBrowser: true } );
+    bc.device.openURI( "https://www.facebook.com/dialog/oauth?client_id=429947087044863&redirect_uri=http%3A%2F%2Fsmooth-stone-1901.herokuapp.com%2Flogin-success.html&display=touch", undefined, undefined, { modalWebBrowser: true } );
   }
 
   function logout() {
