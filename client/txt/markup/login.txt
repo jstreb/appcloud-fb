@@ -1,19 +1,20 @@
 ===== login-tmpl
+<br>
 <div class="button login">Login</div>
 
 ===== user-info-tmpl
 <!-- The details_msg comes from the locale.txt file.  Any strings that are hardcoded for your app should go into the locale files -->
 <table>
   <tr>
-    <td>Profile</td>
+    <td class="label">Profile:</td>
     <td><img src="{{profile}}" /></td>
   </tr>
   <tr>
-    <td>Name</td>
+    <td class="label">Name:</td>
     <td>{{first_name}} {{last_name}}</td>
   </tr>
   <tr>
-    <td>Gender</td>
+    <td class="label">Gender:</td>
     <td>{{gender}}</td>
   </tr>
 </table>

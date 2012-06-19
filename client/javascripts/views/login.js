@@ -1,5 +1,6 @@
 ( function( $ ) {
   var _FBComm;
+  var _loggedInInterval;
 
   $( window ).bind( "message", handlePostMessage );
 
@@ -68,6 +69,9 @@
 
   function login() {
     bc.device.openURI( "https://www.facebook.com/dialog/oauth?client_id=429947087044863&redirect_uri=http%3A%2F%2Fsmooth-stone-1901.herokuapp.com%2Flogin-success.html&display=touch", undefined, undefined, { modalWebBrowser: true } );
+    
+    //Start to check for when the user is logged in.  Once we have an event for when the modal window is closed in 1.10.1 this will not be necessary.
+    _loggedInInterval = setInterval( checkStatus, 300 );
   }
 
   function logout() {
